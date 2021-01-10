@@ -1,0 +1,75 @@
+﻿@page "/{id:int?}"
+@model Calalb_Ana_proiect.Pages.Albums.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Album[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Album[0].Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Album[0].Length)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Album[0].Year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Album[0].Artist.ArtistName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model =>model.Album[0].AlbumGenres)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.AlbumD.Albums) {
+    string selectedRow = "";
+    if(item.ID == Model.AlbumID)
+    {
+        selectedRow = "table-success";
+    }
+        <tr class="@selectedRow">
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Length)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Artist.ArtistName)
+            </td>
+            <td>
+                @{ 
+                    foreach(var genre in item.AlbumGenres)
+                    {
+                        @genre.Genre.ID @: @genre.Genre.GenreName <br/>
+                    }
+                }
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

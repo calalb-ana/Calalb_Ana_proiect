@@ -1,0 +1,77 @@
+﻿@page
+@model Calalb_Ana_proiect.Pages.Albums.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Album</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Album.Title" class="control-label"></label>
+                <input asp-for="Album.Title" class="form-control" />
+                <span asp-validation-for="Album.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Album.Type" class="control-label"></label>
+                <input asp-for="Album.Type" class="form-control" />
+                <span asp-validation-for="Album.Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Album.Length" class="control-label"></label>
+                <input asp-for="Album.Length" class="form-control" />
+                <span asp-validation-for="Album.Length" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Album.Year" class="control-label"></label>
+                <input asp-for="Album.Year" class="form-control" />
+                <span asp-validation-for="Album.Year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Album.ArtistID" class="control-label">Artist Name</label>
+                <select asp-for="Album.ArtistID" class="form-control" asp-items="ViewBag.ArtistID"></select>
+                <span asp-validation-for="Album.ArtistID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="table">
+                    <table>
+                        <tr>
+                            @{
+                                int cnt = 0;
+                                foreach (var gen in Model.AssignedGenreDataList)
+                                {
+                                    if (cnt++ % 3 == 0)
+                                    {
+                                    @:</tr><tr>
+                                    }
+                                    @:<td>
+                                        <input type="checkbox" name="selectedGenres" value="@gen.GenreID"
+                                               @(Html.Raw(gen.Assigned ? "checked=\"checked\"" : "")) />
+                                        @gen.GenreID @: @gen.Name
+                                    @:</td>
+                                }
+                            @:</tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
